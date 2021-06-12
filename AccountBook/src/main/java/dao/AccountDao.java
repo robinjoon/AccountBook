@@ -11,28 +11,46 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.transaction.annotation.Transactional;
 
 import dto.Account;
-
+/**
+ * AccountDao is a Data Access Object that fetches Account object from DB or stores Account object in DB.
+ * @throws DataAccessException
+ * All methods in this class throw a DataAccessException if the parameter is an invalid value or there is a problem with the DB connection.
+ * @version 1.0
+ * @author robinjoon */
 public class AccountDao {
 	private JdbcTemplate jdbcTemplate;
 	
 	public AccountDao(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
-	
+	/**
+	 * @param aid Account's identifier. natural number.
+	 * @return Returns Account with aid as the identifier.
+	 */
 	public Account selectByAid(long aid) throws DataAccessException{
 		String sql = "select * from account where aid = ?";
 		List<Account> results = jdbcTemplate.query(sql, new AccountRowMapper<Account>(),aid);
 		return results.get(0);
 	}
-	
+	/**
+	 * @param yearMonth	Identifier for AccountBook. A string in the form of yy-mm. 
+	 * @param type A string indicating the type of Account. Expenditure or Income
+	 * @return Returns the List of Accounts.
+	 */
 	public List<Account> selectByYearMonth(String yearMonth, String type)throws DataAccessException{
 		String sql = "select * from account where yearMonth = ? and accountType = ?";
 		List<Account> results = jdbcTemplate.query(sql, new AccountRowMapper<Account>(),yearMonth ,type);
 		return results;
 	}
-	
+	/**
+	 * @param account Account object to store in DB. 
+	 * @return Returns the ID of Account stored in DB.
+	 * @throws IllegalArgumentException if accounts.getValue() is not positive.
+	 * */
+	@Transactional
 	public long insert(Account account) throws DataAccessException{
 		if(account.getValue()<=0) {
 			throw new IllegalArgumentException("value must be positive");
@@ -61,7 +79,15 @@ public class AccountDao {
 		}
 		return (long) keyHolder.getKey();
 	}
+	/**
+	 * @param account Account object to store in DB. 
+	 * @return Returns the Account stored in the DB.
+	 * @throws IllegalArgumentException if accounts.getValue() is not positive.
+	 * */
 	public Account insertWithAid(Account account) throws DataAccessException{
+		if(account.getValue()<=0) {
+			throw new IllegalArgumentException("value must be positive");
+		}
 		String sql = "insert into account values(?,?,?,?,?,?,?,?)";
 		jdbcTemplate.update(sql,account.getAid(),account.getTime(),account.getAccountType(),account.getValue(),
 				account.getAssetName(),account.getCategory(),account.getMemo(),account.getYearMonth());
@@ -74,6 +100,10 @@ public class AccountDao {
 		}
 		return selectByAid(account.getAid());
 	}
+	/**
+	 * @param aid Account's identifier. natural number.
+	 * @return Returns the deleted Account.
+	 * */
 	public Account deleteAccount(long aid) throws DataAccessException {
 		String sql = "delete from account where aid = ?";
 		Account account = selectByAid(aid);

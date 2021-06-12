@@ -11,14 +11,21 @@ import dto.AccountBook;
 import dto.Asset;
 import dto.Category;
 import dto.ConversionAccount;
-
+/**
+ * AccountBookDao is a Data Access Object that fetches Account Book object from DB or stores new AccountBook object in DB.
+ * @version 1.0
+ * @author robinjoon */
 public class AccountBookDao {
 private JdbcTemplate jdbcTemplate;
 	
 	public AccountBookDao(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
-	
+	/**
+	 * @param yearMonth	Identifier for AccountBook. A string in the form of yy-mm. 
+	 * @return Returns AccountBook with  yearMonth as an identifier.
+	 * @throws DataAccessException - If there is no Accountbook with yearMonth as an identifier 
+	 * */
 	public AccountBook selectByYearMonth(String yearMonth) throws DataAccessException{
 		String sql = "select * from book where yearMonth = ?";
 		AccountBook book = jdbcTemplate.query(sql, new AccountBookRowMapper<AccountBook>(), yearMonth).get(0);
@@ -45,7 +52,10 @@ private JdbcTemplate jdbcTemplate;
 		.build();
 		return book;
 	}
-	
+	/**
+	 * @param yearMonth	Identifier for AccountBook. A string in the form of yy-mm. 
+	 * @return Returns the newly created AccountBook.
+	 * */
 	public AccountBook newAccountBook(String yearMonth) throws DataAccessException{
 		String sql = "insert into book(yearMonth) values(?) ";
 		try {

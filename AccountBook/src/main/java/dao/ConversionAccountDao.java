@@ -14,20 +14,33 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.transaction.annotation.Transactional;
 
 import dto.ConversionAccount;
-
+/**
+ * ConversionAccountDao is a Data Access Object that fetches ConversionAccount object from DB or stores ConversionAccount object in DB.
+ * @throws DataAccessException
+ * All methods in this class throw a DataAccessException if the parameter is an invalid value or there is a problem with the DB connection.
+ * @version 1.0
+ * @author robinjoon */
 public class ConversionAccountDao {
 	private JdbcTemplate jdbcTemplate;
 	
 	public ConversionAccountDao(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
-	
+	/**
+	 * @param yearMonth	Identifier for AccountBook. A string in the form of yy-mm.
+	 * @return Returns the List of ConversionAccount.
+	 * */
 	public List<ConversionAccount> selectByYearMonth(String yearMonth) throws DataAccessException{
 		String sql = "select * from conversionaccount where yearmonth = ?";
 		List<ConversionAccount> results = jdbcTemplate.query(sql,new ConversionAccountRowMapper<ConversionAccount>(),yearMonth);
 		return results;
 	}
 	@Transactional
+	/**
+	 * @param account ConversionAccount object to store in DB.
+	 * @return Returns the ConversionAccount stored in the DB.
+	 * @throws IllegalArgumentException if accounts.getValue() is not positive.
+	 * */
 	public ConversionAccount insert(ConversionAccount account) throws DataAccessException{
 		if(account.getValue()<=0)
 			throw new IllegalArgumentException("value must be positive");
@@ -53,7 +66,10 @@ public class ConversionAccountDao {
 			return new ConversionAccount();
 		}
 	}
-	
+	/**
+	 * @param aid Identifier for ConversionAccount. A string in the form of yy-mm.
+	 * @return Returns ConversionAccount with aid as the identifier.
+	 * */
 	public ConversionAccount selectByAid(long aid) throws DataAccessException{
 		String sql = "select * from conversionaccount where aid = ?";
 		List<ConversionAccount> results = jdbcTemplate.query(sql,new ConversionAccountRowMapper<ConversionAccount>(),aid);
