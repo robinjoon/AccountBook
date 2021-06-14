@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import dao.AccountBookDao;
 import dao.AccountDao;
+import dao.AssetDao;
 import dao.AuthDao;
+import dao.CategoryDao;
 import dao.ConversionAccountDao;
 @Configuration
 @EnableTransactionManagement
@@ -20,8 +22,8 @@ public class DaoConfig {
 		DataSource ds = new DataSource();
 		ds.setDriverClassName("org.mariadb.jdbc.Driver");
 		ds.setUrl("jdbc:mariadb://localhost/accountbook?characterEncoding=utf8mb4_general_ci");
-		ds.setUsername("");
-		ds.setPassword("");
+		ds.setUsername("accountbook");
+		ds.setPassword("accountbook!Q@W#E$R");
 		ds.setInitialSize(2);
 		ds.setMaxActive(10);
 		ds.setTestWhileIdle(true);
@@ -35,13 +37,11 @@ public class DaoConfig {
 		tm.setDataSource(dataSource());
 		return tm;
 	}
-	@Bean
-	public AccountDao accountDao() {
+	@Bean AccountDao accountDao() {
 		return new AccountDao(dataSource());
 	}
 	
-	@Bean 
-	public AccountBookDao accountBookDao() {
+	@Bean AccountBookDao accountBookDao() {
 		return new AccountBookDao(dataSource());
 	}
 	
@@ -52,4 +52,10 @@ public class DaoConfig {
 	@Bean AuthDao authDao() {
 		return new AuthDao(dataSource());
 	}
-}
+	@Bean AssetDao assetDao() {
+		return new AssetDao(dataSource());
+	}
+	@Bean CategoryDao categoryDao() {
+		return new CategoryDao(dataSource());
+	}
+}	
