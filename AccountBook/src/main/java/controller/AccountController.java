@@ -22,7 +22,7 @@ public class AccountController {
 	@Autowired
 	private AccountDao accountDao;
 	@GetMapping("/{aid}")
-	public DtoWithHttpCode<Account> accountByAid(@PathVariable("aid") long aid) {
+	private DtoWithHttpCode<Account> accountByAid(@PathVariable("aid") long aid) {
 		Account account = null;
 		DtoWithHttpCode<Account> dto;
 		try {
@@ -35,7 +35,7 @@ public class AccountController {
 	}
 	
 	@GetMapping("{type}/{yearMonth}")
-	public DtoWithHttpCode<List<Account>> accountsByYearMonth(@PathVariable("yearMonth") String yearMonth, @PathVariable("type")String type) {
+	private DtoWithHttpCode<List<Account>> accountsByYearMonth(@PathVariable("yearMonth") String yearMonth, @PathVariable("type")String type) {
 		List<Account> accounts = null;
 		DtoWithHttpCode<List<Account>> dto;
 		if(type.equalsIgnoreCase("income") || type.equalsIgnoreCase("expenditure")) {
@@ -51,7 +51,7 @@ public class AccountController {
 		return dto;
 	}
 	@PostMapping("")
-	public DtoWithHttpCode<Account> newAccount(@RequestBody Account account) {
+	private DtoWithHttpCode<Account> newAccount(@RequestBody Account account) {
 		long aid;
 		DtoWithHttpCode<Account> dto;
 		try {
@@ -64,7 +64,7 @@ public class AccountController {
 		return dto;
 	}
 	@DeleteMapping("/{aid}")
-	public DtoWithHttpCode<Account> deleteAccount(@PathVariable("aid") long aid) {
+	private DtoWithHttpCode<Account> deleteAccount(@PathVariable("aid") long aid) {
 		Account account;
 		DtoWithHttpCode<Account> dto;
 		try{
@@ -76,7 +76,7 @@ public class AccountController {
 		return dto;
 	}
 	@PutMapping("/{aid}")
-	public DtoWithHttpCode<Account> editAccount(@RequestBody Account account) {
+	private DtoWithHttpCode<Account> editAccount(@RequestBody Account account) {
 		DtoWithHttpCode<Account> dto;
 		try {
 			Account backup = accountDao.deleteAccount(account.getAid());

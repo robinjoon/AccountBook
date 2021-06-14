@@ -18,7 +18,7 @@ public class AccountBookController {
 	private AccountBookDao dao;
 	
 	@GetMapping("/{yearMonth}")
-	public DtoWithHttpCode<AccountBook> accountBookByYearMonth(@PathVariable("yearMonth") String yearMonth) {
+	private DtoWithHttpCode<AccountBook> accountBookByYearMonth(@PathVariable("yearMonth") String yearMonth) {
 		DtoWithHttpCode<AccountBook> dto;
 		AccountBook book ;
 		try{
@@ -30,7 +30,7 @@ public class AccountBookController {
 		return dto;
 	}
 	@PostMapping("/{yearMonth}")
-	public DtoWithHttpCode<AccountBook> newAccountBook(@PathVariable("yearMonth") String yearMonth) {
+	private DtoWithHttpCode<AccountBook> newAccountBook(@PathVariable("yearMonth") String yearMonth) {
 		DtoWithHttpCode<AccountBook> dto;
 		AccountBook book;
 		try {

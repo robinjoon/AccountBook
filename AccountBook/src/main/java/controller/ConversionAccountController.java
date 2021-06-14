@@ -21,7 +21,7 @@ public class ConversionAccountController {
 	private ConversionAccountDao dao;
 	
 	@GetMapping("/{yearMonth}")
-	public DtoWithHttpCode<List<ConversionAccount>> conversionAccountsByYearMonth(@PathVariable("yearMonth")String yearMonth){
+	private DtoWithHttpCode<List<ConversionAccount>> conversionAccountsByYearMonth(@PathVariable("yearMonth")String yearMonth){
 		List<ConversionAccount> list = null;
 		DtoWithHttpCode<List<ConversionAccount>> dto;
 		try {
@@ -34,7 +34,7 @@ public class ConversionAccountController {
 	}
 	
 	@PostMapping("")
-	public DtoWithHttpCode<ConversionAccount> insert(@RequestBody ConversionAccount account){
+	private DtoWithHttpCode<ConversionAccount> insert(@RequestBody ConversionAccount account){
 		DtoWithHttpCode<ConversionAccount> dto;
 		ConversionAccount data = null;
 		try {
