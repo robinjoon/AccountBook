@@ -38,6 +38,9 @@ public class Account {
 			this.accountType = accountType;
 			return this;
 		}
+		/**
+		 * @throws IllegalArgumentException if value is not positive.
+		 * */
 		public Builder setValue(long value) {
 			if(value > 0) {
 				this.value = value;
