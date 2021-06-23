@@ -30,7 +30,9 @@
 
 ### /accounts/conversion/{YYYY-mm}
 1. GET : YYYY-mm 가계부에서 conversionaccount를 모두 가져옵니다.
-2. POST : YYYY-mm 가계부에 새 conversionaccount를 생성합니다.
+
+### /accounts/conversion/
+1. POST : 새 conversionaccount를 생성합니다.
 
 ### /assets/{name}
 1. GET : assetName이 {name}인 asset를 가져옵니다.
