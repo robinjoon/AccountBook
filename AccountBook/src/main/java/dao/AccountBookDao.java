@@ -42,7 +42,7 @@ private JdbcTemplate jdbcTemplate;
 		book = new AccountBook.Builder()
 		.setYearMonth(book.getYearMonth())
 		.setTotalIncome(book.getTotalIncome())
-		.setTotlaExpenditure(book.getTotalIncome())
+		.setTotlaExpenditure(book.getTotlaExpenditure())
 		.setIncomeCategoryList(incomeCategoryList)
 		.setExpenditureAccountList(expenditureAccountList)
 		.setAssetList(assetList)
