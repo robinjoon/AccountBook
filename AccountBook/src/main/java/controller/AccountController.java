@@ -21,19 +21,18 @@ import dto.DtoWithHttpCode;
 public class AccountController {
 	@Autowired
 	private AccountDao accountDao;
-	@GetMapping("/{aid}")
-	private DtoWithHttpCode<Account> accountByAid(@PathVariable("aid") long aid) {
-		Account account = null;
-		DtoWithHttpCode<Account> dto;
+	@GetMapping("/{date}")
+	private DtoWithHttpCode<List<Account>> accountsByDate(@PathVariable("date") String date){
+		List<Account> accounts = null;
+		DtoWithHttpCode<List<Account>> dto;
 		try {
-			account = accountDao.selectByAid(aid);
-			dto = new DtoWithHttpCode<Account>(200, account, new String[1]);
+			accounts = accountDao.selectByDate(date);
+			dto = new DtoWithHttpCode<List<Account>>(200, accounts, new String[1]);
 		}catch(Exception e) {
-			dto = new DtoWithHttpCode<Account>(500, new Account(), new String[1]);
+			dto = new DtoWithHttpCode<List<Account>>(404, null, new String[1]);
 		}
 		return dto;
 	}
-	
 	@GetMapping("{type}/{yearMonth}")
 	private DtoWithHttpCode<List<Account>> accountsByYearMonth(@PathVariable("yearMonth") String yearMonth, @PathVariable("type")String type) {
 		List<Account> accounts = null;
@@ -41,7 +40,7 @@ public class AccountController {
 		if(type.equalsIgnoreCase("income") || type.equalsIgnoreCase("expenditure")) {
 			try {
 				accounts = accountDao.selectByYearMonth(yearMonth, type);
-				dto = new DtoWithHttpCode<List<Account>>(500, accounts, new String[1]);
+				dto = new DtoWithHttpCode<List<Account>>(200, accounts, new String[1]);
 			}catch(Exception e) {
 				dto = new DtoWithHttpCode<List<Account>>(404, null, new String[1]);
 			}
