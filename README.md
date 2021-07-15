@@ -16,15 +16,16 @@
 1. GET : YYYY-mm 인 가계부를 가져온다.
 2. POST : YYYY-mm 인 가계부를 생성한다. 이미 존재한다면 실패한다.
 
+### /accounts/{date}
+1. GET : time이 {date}인 accounte들을 가져온다.
 ### /accounts/{aid}
-1. GET : 식별자가 aid인 account를 가져온다.
-2. PUT : 식별자가 aid인 account를 수정한다.
-3. DELETE : 식별자가 aid인 account를 삭제한다.
+1. PUT : 식별자가 aid인 account를 수정한다.
+2. DELETE : 식별자가 aid인 account를 삭제한다.
 
 ### /accounts
 1. POST : 새 account를 생성한다. 
 
-### /account/{type}/{YYYY-mm}
+### /accounts/{type}/{YYYY-mm}
 {type} 은 Income 혹은 Expenditure 입니다.
 1. GET : YYYY-mm가계부에서 accountType이 {type}인 account들을 가져옵니다.
 
