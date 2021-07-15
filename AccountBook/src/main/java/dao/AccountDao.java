@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
@@ -30,6 +31,11 @@ public class AccountDao {
 	 * @param aid Account's identifier. natural number.
 	 * @return Returns Account with aid as the identifier.
 	 */
+	public List<Account> selectByDate(String date){
+		String sql = "select * from account where DATE(time) = ?";
+		List<Account> results = jdbcTemplate.query(sql, new AccountRowMapper<Account>(),date);
+		return results;
+	}
 	public Account selectByAid(long aid) throws DataAccessException{
 		String sql = "select * from account where aid = ?";
 		List<Account> results = jdbcTemplate.query(sql, new AccountRowMapper<Account>(),aid);

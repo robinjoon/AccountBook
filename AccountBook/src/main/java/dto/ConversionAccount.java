@@ -28,9 +28,6 @@ public class ConversionAccount{
 			this.aid = aid;
 			return this;
 		}
-		/**
-		 * @throws IllegalArgumentException - If value is not positive. 
-		 * */
 		public Builder setValue(long value) {
 			if(value<=0)
 				throw new IllegalArgumentException("value must be positive");
