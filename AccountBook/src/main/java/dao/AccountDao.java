@@ -3,7 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
@@ -61,7 +61,7 @@ public class AccountDao {
 		if(account.getValue()<=0) {
 			throw new IllegalArgumentException("value must be positive");
 		}
-		String sql = "insert into account(accountType,value,assetName,category,memo,yearMonth) values(?,?,?,?,?,?)";
+		String sql = "insert into account(accountType,value,assetName,category,memo,yearMonth,time) values(?,?,?,?,?,?,?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			@Override
@@ -73,6 +73,7 @@ public class AccountDao {
 				pstmt.setString(4, account.getCategory());
 				pstmt.setString(5, account.getMemo());
 				pstmt.setString(6, account.getYearMonth());
+				pstmt.setTimestamp(7, Timestamp.valueOf(account.getTime()));
 				return pstmt;
 			}
 		},keyHolder);
